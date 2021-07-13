@@ -1,6 +1,6 @@
 FROM ubuntu:focal
-ARG http_proxy ''
-ARG https_proxy ${http_proxy}
+#ARG http_proxy ''
+#ARG https_proxy ${http_proxy}
 RUN apt update; apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
     apt clean
