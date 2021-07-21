@@ -4,20 +4,20 @@ ARG https_proxy ''
 RUN apt update; apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
     apt clean
-RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy httpd_proxy; \
+RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy https_proxy; \
     pip install pipenv sphinx
 COPY texlive.profile /etc/
-RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy httpd_proxy; \
+RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy https_proxy; \
     mkdir /tmp/work; cd /tmp/work;\
     curl -sL https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | tar xz;  cd *; \
     ./install-tl -print-arch | awk '{printf("binary_%s 1", $0)}' | tee -a /etc/texlive.profile > /dev/null;\
     ./install-tl -profile  /etc/texlive.profile
-RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy httpd_proxy; \
+RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy https_proxy; \
     cd /tmp/work/*; TEXBIN=/opt/texlive/2021/bin/$(./install-tl --print-arch); PATH=$PATH:$TEXBIN; \
     tlmgr install latexmk cmap amsmath kvoptions graphics ltxcmds kvsetkeys float \
     wrapfig capt-of tools framed fancyvrb upquote needspace tabulary varwidth parskip fancyhdr \
     titlesec geometry hyperref pdftexcmds infwarerr oberdiek
-RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy httpd_proxy; \
+RUN http_proxy=${http_proxy} https_proxy=${https_proxy}; export http_proxy https_proxy; \
     cd /tmp/work/*; TEXBIN=/opt/texlive/2021/bin/$(./install-tl --print-arch); PATH=$PATH:$TEXBIN; \
     tlmgr install xkeyval everyhook svn-prov etoolbox \
         wrapfig capt-of framed fancyvrb tabulary parskip fancyhdr titlesec geometry
