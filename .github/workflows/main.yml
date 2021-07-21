@@ -1,0 +1,23 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: "main"
+    - name: Auth
+      run: |
+        docker login -u densuke -p "${{ secrets.D_PASS }}"
+    - name: Build
+      run: |
+        docker build -t densuke/sphinx-pdf:arm64 .
+    - name: Push
+      run: |
+        docker push densuke/sphinx-pdf:arm64
