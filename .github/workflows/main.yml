@@ -21,4 +21,5 @@ jobs:
         docker tag densuke/sphinx-pdf:latest-arm64 densuke/sphinx-pdf:latest
     - name: Push
       run: |
-        docker push densuke/sphinx-pdf:latest-arm64 densuke/sphinx-pdf:latest
+        docker push densuke/sphinx-pdf:latest-arm64
+        docker push densuke/sphinx-pdf:latest
