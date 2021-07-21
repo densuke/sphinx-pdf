@@ -17,7 +17,7 @@ jobs:
         docker login -u densuke -p "${{ secrets.PASS_D }}"
     - name: Build
       run: |
-        docker build -t densuke/sphinx-pdf:arm64 .
+        docker build -t densuke/sphinx-pdf:arm64 --build-arg "http_proxy=${{ env.http_proxy }},https_proxy=${{ env.https_proxy }}" .
     - name: Push
       run: |
         docker push densuke/sphinx-pdf:arm64
