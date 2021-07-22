@@ -12,13 +12,6 @@ if [ -f "${PRE}" ]; then
     sh ${PRE}
 fi
 
-# if [ -f Pipfile ]; then
-#     pipenv install
-# else
-#     echo "create VirtualEnv"
-#     pipenv install sphinx
-# fi
-#
 if [ -f "$RQ" ]; then
     echo "installing requirements"
     pip install -r "${RQ}"

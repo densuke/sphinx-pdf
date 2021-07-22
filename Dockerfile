@@ -2,7 +2,7 @@ FROM ubuntu:focal
 RUN apt update; apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
     apt clean
-RUN pip install pipenv sphinx
+RUN python3 -m pip install sphinx
 COPY texlive.profile /etc/
 RUN mkdir /tmp/work; cd /tmp/work;\
     curl -sL https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | tar xz;  cd *; \
