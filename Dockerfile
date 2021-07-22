@@ -1,8 +1,12 @@
 FROM ubuntu:focal
 RUN apt update; \
-    [ -x /usr/sbin/dpkg-split ] || ln -sv /usr/bin/dpkg-split /usr/sbin/; \
-    [ -x /usr/sbin/dpkg-deb ] || ln -sv /usr/bin/dpkg-deb /usr/sbin/; \
-    [ -x /usr/sbin/tar ] || ln -sv /usr/bin/tar /usr/sbin/; \
+    if [ `uname -m` = 'aarch64' ]; then \
+        for i in /bin/* /usr/bin/*; do \
+            if [ -e /usr/sbin/$(basename $i) ]; then \
+                ln -sv $i /usr/sbin/; \
+            fi; \
+        done; \
+    fi; \
     apt install -y apt-utils; \
     apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
