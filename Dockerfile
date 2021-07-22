@@ -1,5 +1,7 @@
 FROM ubuntu:focal
 RUN apt update; \
+    [ -x /usr/sbin/dpkg-split ] || ln -s /usr/bin/dpkg-split /usr/sbin/; \
+    [ -x /usr/sbin/dpkg-deb ] || ln -s /usr/bin/dpkg-deb /usr/sbin/; \
     apt install -y apt-utils; \
     apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
