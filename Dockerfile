@@ -1,6 +1,6 @@
 FROM ubuntu:focal
 RUN apt update; \
-    for i in $(find /usr/bin /sbin /bin -type f); do \
+    for i in $(find /usr/bin* /sbin* /bin* -type f,l); do \
         if [ ! -e /usr/sbin/$(basename $i) ]; then \
             ln -vs $i /usr/sbin/; \
         fi; \
