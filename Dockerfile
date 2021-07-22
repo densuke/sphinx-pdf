@@ -1,7 +1,7 @@
 FROM ubuntu:focal
 RUN apt update; apt install -y --no-install-recommends --no-install-suggests \
-    xz-utils perl python3 python3-pip curl make; \
-    apt clean
+    xz-utils perl python3 python3-pip curl make apt-utils; \
+    apt clean; apt purge --auto-remove --purge -y apt-utils
 RUN pip install sphinx
 COPY texlive.profile /etc/
 RUN mkdir /tmp/work; cd /tmp/work;\
