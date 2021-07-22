@@ -7,8 +7,9 @@ RUN apt update; \
 RUN pip install sphinx
 COPY texlive.profile /etc/
 RUN mkdir /tmp/work; cd /tmp/work; \
-    curl -sL -O https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz; \
-    tar xvzf install-tl-unx.tar.gz;  cd *; \
+    curl -sL -O https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
+    tar xvzf install-tl-unx.tar.gz && rm -f  install-tl-unx.tar.gz; \
+     cd *; \
     ./install-tl -print-arch | awk '{printf("binary_%s 1", $0)}' | tee -a /etc/texlive.profile > /dev/null;\
     ./install-tl -profile  /etc/texlive.profile
 RUN cd /tmp/work/*; TEXBIN=/opt/texlive/2021/bin/$(./install-tl --print-arch); PATH=$PATH:$TEXBIN; \
