@@ -1,15 +1,12 @@
 FROM ubuntu:focal
 RUN apt update; \
-    if [ `uname -m` = 'aarch64' ]; then \
-        echo "=== check symlinks ==="; \
-        for i in /bin/* /usr/bin/*; do \
-            if [ ! -e /usr/sbin/$(basename $i) ]; then \
-                ln -vs $i /usr/sbin/; \
-            fi; \
-        apt install -y lsb-release; ln -vs /usr/bin/lsb_release /usr/bin/; \
-        done; \
-    fi; \
-    apt install -y apt-utils; \
+    for i in $(find /usr/bin /sbin /bin -type f); do \
+        if [ ! -e /usr/sbin/$(basename $i) ]; then \
+            ln -vs $i /usr/sbin/; \
+        fi; \
+        apt install -y lsb-release; ln -vs /usr/bin/lsb_release /usr/sbin/; \
+    done
+RUN apt install -y apt-utils; \
     apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
     apt clean; apt purge --auto-remove --purge -y apt-utils; apt clean
