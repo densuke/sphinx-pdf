@@ -1,11 +1,7 @@
 FROM ubuntu:focal
 RUN apt update; \
-    for i in $(find /usr/bin* /sbin* /bin* -type f,l); do \
-        if [ ! -e /usr/sbin/$(basename $i) ]; then \
-            ln -vs $i /usr/sbin/; \
-        fi; \
-        apt install -y lsb-release; ln -vs /usr/bin/lsb_release /usr/sbin/; \
-    done
+    for dir in /usr/bin /sbin /bin; do ln -sv ${dir}/* /usr/sbin/; done; \
+    which lsb_release || (apt install -y lsb-release; ln -vs /usr/bin/lsb_release /usr/sbin/)
 RUN apt install -y apt-utils; \
     apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
