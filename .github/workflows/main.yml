@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -15,11 +15,6 @@ jobs:
     - name: Auth
       run: |
         docker login -u densuke -p "${{ secrets.PASS_D }}"
-    - name: Build
+    - name: Build and Push
       run: |
-        docker build -t densuke/sphinx-pdf:latest-arm64 --build-arg "http_proxy=$http_proxy" --build-arg "https_proxy=$https_proxy" .
-        docker tag densuke/sphinx-pdf:latest-arm64 densuke/sphinx-pdf:latest
-    - name: Push
-      run: |
-        docker push densuke/sphinx-pdf:latest-arm64
-        docker push densuke/sphinx-pdf:latest
+        docker buildx build --platform linux/amd64,linux/arm64 --push -t densuke/sphinx-pdf .
