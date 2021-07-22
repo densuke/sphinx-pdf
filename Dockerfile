@@ -6,7 +6,7 @@ RUN apt install -y apt-utils; \
     apt install -y --no-install-recommends --no-install-suggests \
     xz-utils perl python3 python3-pip curl make; \
     apt clean; apt purge --auto-remove --purge -y apt-utils; apt clean
-RUN pip install sphinx
+RUN python -m pip install sphinx
 COPY texlive.profile /etc/
 RUN mkdir /tmp/work; cd /tmp/work; \
     curl -sL -O https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
