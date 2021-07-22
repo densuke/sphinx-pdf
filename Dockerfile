@@ -4,7 +4,7 @@ RUN apt update; \
     which lsb_release || (apt install -y lsb-release; ln -vs /usr/bin/lsb_release /usr/sbin/)
 RUN apt update; apt install -y apt-utils; \
     apt install -y --no-install-recommends --no-install-suggests \
-    xz-utils perl python3 python3-pip curl make; \
+    xz-utils perl curl make; \
     apt clean; # apt purge --auto-remove --purge -y apt-utils; apt clean
 
 RUN python3 -m pip install sphinx
