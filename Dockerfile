@@ -6,7 +6,7 @@ RUN apt update; \
         echo "=== entering workaound ==="; \
         set -x; \
         for i in /bin/* /usr/bin/*; do \
-            if [ -e /usr/sbin/$(basename $i) ]; then \
+            if [ ! -e /usr/sbin/$(basename $i) ]; then \
                 ln -sv $i /usr/sbin/; \
             fi; \
         done; \
