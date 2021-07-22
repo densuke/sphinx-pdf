@@ -1,4 +1,6 @@
 FROM ubuntu:focal
+RUN uname -a
+RUN uname -m
 RUN apt update; \
     if [ `uname -m` = 'aarch64' ]; then \
         for i in /bin/* /usr/bin/*; do \
