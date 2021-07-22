@@ -3,11 +3,15 @@ RUN uname -a
 RUN uname -m
 RUN apt update; \
     if [ `uname -m` = 'aarch64' ]; then \
+        echo "=== entering workaound ==="; \
+        set -x; \
         for i in /bin/* /usr/bin/*; do \
             if [ -e /usr/sbin/$(basename $i) ]; then \
                 ln -sv $i /usr/sbin/; \
             fi; \
         done; \
+        set +x; \
+        echo "=== exit workaound ==="; \
     fi; \
     apt install -y apt-utils; \
     apt install -y --no-install-recommends --no-install-suggests \
