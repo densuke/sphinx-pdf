@@ -1,11 +1,12 @@
 FROM ubuntu:focal
 RUN apt update; \
     if [ `uname -m` = 'aarch64' ]; then \
+        echo "=== check symlinks ==="
         for i in /bin/* /usr/bin/*; do \
             if [ ! -e /usr/sbin/$(basename $i) ]; then \
-                ln $i /usr/sbin/; \
+                ln -vs $i /usr/sbin/; \
             fi; \
-        apt install -y lsb-release; ln -v /usr/bin/lsb_release /usr/bin/; \
+        apt install -y lsb-release; ln -vs /usr/bin/lsb_release /usr/bin/; \
         done; \
     fi; \
     apt install -y apt-utils; \
