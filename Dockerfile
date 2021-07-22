@@ -1,7 +1,7 @@
 FROM ubuntu:focal
 RUN apt update; \
     if [ `uname -m` = 'aarch64' ]; then \
-        echo "=== check symlinks ==="
+        echo "=== check symlinks ==="; \
         for i in /bin/* /usr/bin/*; do \
             if [ ! -e /usr/sbin/$(basename $i) ]; then \
                 ln -vs $i /usr/sbin/; \
