@@ -1,20 +1,11 @@
-FROM python:3-buster
-RUN apt update; \
-    for dir in /usr/bin /sbin /bin; do ln -sv ${dir}/* /usr/sbin/; done; \
-    which lsb_release || \
-    (apt install -y lsb-release; ln -vs /usr/bin/lsb_release /usr/sbin/; \
-    ln -s /usr/share/pyshared/lsb_release.py /usr/local/lib/python3.9/site-packages/lsb_release.py)
-RUN apt update; apt install -y apt-utils; \
-    apt install -y --no-install-recommends --no-install-suggests \
-    xz-utils perl curl make; \
-    apt clean; # apt purge --auto-remove --purge -y apt-utils; apt clean
-
+FROM alpine
+RUN apk update; \
+    apk add --no-cache xz perl curl make python3  py3-pip
 RUN python3 -m pip install sphinx
 COPY texlive.profile /etc/
 RUN mkdir /tmp/work; cd /tmp/work; \
-    curl -sL -O https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
-    tar xvzf install-tl-unx.tar.gz && rm -f  install-tl-unx.tar.gz; \
-     cd *; \
+    curl -sL https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | \
+    tar xz ; cd *; \
     ./install-tl -print-arch | awk '{printf("binary_%s 1", $0)}' | tee -a /etc/texlive.profile > /dev/null;\
     ./install-tl -profile  /etc/texlive.profile
 RUN cd /tmp/work/*; TEXBIN=/opt/texlive/2021/bin/$(./install-tl --print-arch); PATH=$PATH:$TEXBIN; \
