@@ -4,7 +4,8 @@ PRE=precmd
 
 set -x
 TEXDIR="$(grep TEXDIR /etc/texlive.profile|awk '{print $2}')"
-PATH=$PATH:$(echo ${TEXDIR}/bin/* | head -n1)
+TEXBIN="$(cat /etc/texbin.path"
+PATH="$PATH:${TEXBIN}"
 set +x
 
 if [ -f "${PRE}" ]; then
