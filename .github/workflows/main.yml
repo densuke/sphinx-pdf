@@ -23,4 +23,4 @@ jobs:
         qemu-version: latest
     - name: Build and Push
       run: |
-        docker buildx build --platform linux/arm64 --push -t densuke/sphinx-pdf .
+        docker buildx build --platform linux/amd64,linux/arm64 --push -t densuke/sphinx-pdf .
