@@ -4,8 +4,8 @@ RUN apk update; \
 RUN python3 -m pip install sphinx
 COPY texlive.profile /etc/
 RUN mkdir /tmp/work; cd /tmp/work; \
-    curl -sL https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | \
-    tar xz ; cd *; \
+    curl -OL https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz; \
+    tar xvzf install-tl-unx.tar.gz; rm -vf install-tl-unx.tar.gz; cd *; \
     ./install-tl -print-arch | awk '{printf("binary_%s 1", $0)}' | tee -a /etc/texlive.profile > /dev/null;\
     ./install-tl -profile  /etc/texlive.profile
 RUN cd /tmp/work/*; TEXBIN=/opt/texlive/2021/bin/$(./install-tl --print-arch); PATH=$PATH:$TEXBIN; \
