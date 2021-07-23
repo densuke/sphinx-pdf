@@ -14,7 +14,7 @@ jobs:
         ref: "master"
     - name: Auth
       run: |
-        docker login -u densuke -p "${{ secrets.PASS_D }}"
+        echo "${{ secrets.PASS_D }}" | docker login -u densuke --password-stdin
     - name: Set up Docker Buildx
       id: buildx
       uses: crazy-max/ghaction-docker-buildx@v3
@@ -23,6 +23,4 @@ jobs:
         qemu-version: latest
     - name: Build and Push
       run: |
-        # docker buildx create --use --name builder --driver docker-container
-        # docker buildx inspect --bootstrap
         docker buildx build --platform linux/arm64,linux/amd64 --push -t densuke/sphinx-pdf .
